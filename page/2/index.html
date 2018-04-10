@@ -255,6 +255,292 @@
             
               
                 
+                <a class="post-title-link" href="/2016/10/14/Define-Using-Thread/" itemprop="url">
+                  Define & Using Thread
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-14T21:46:34+08:00" content="2016-10-14">
+              2016-10-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/Concurrency/" itemprop="url" rel="index">
+                    <span itemprop="name">Concurrency</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/Concurrency/Thread/" itemprop="url" rel="index">
+                    <span itemprop="name">Thread</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Defining-and-Starting-a-Thread"><a href="#Defining-and-Starting-a-Thread" class="headerlink" title="Defining and Starting a Thread"></a>Defining and Starting a Thread</h2><p>( reference : <a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/runthread.html" target="_blank" rel="noopener">Defining and Starting a Thread</a> )</p>
+<p>An application that creates an instance of Thread must provide the code that will run in that thread. There are <strong>two ways</strong> to do this:</p>
+<p><strong>Provide a Runnable object.</strong> The Runnable interface defines a single method, run, meant to contain the code executed in the thread. The Runnable object is passed to the Thread constructor, as in the HelloRunnable example:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloRunnable</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Hello from a thread!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line">        (<span class="keyword">new</span> Thread(<span class="keyword">new</span> HelloRunnable())).start();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>Subclass Thread.</strong> The Thread class itself implements Runnable, though its run method does nothing. An application can subclass Thread, providing its own implementation of run, as in the HelloThread example:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Hello from a thread!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line">        (<span class="keyword">new</span> HelloThread()).start();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Notice that both examples invoke <strong>Thread.start</strong> in order to start the new thread.</p>
+<h2 id="Which-of-these-idioms-should-you-use"><a href="#Which-of-these-idioms-should-you-use" class="headerlink" title="Which of these idioms should you use?"></a>Which of these idioms should you use?</h2><p>The first idiom, which employs a Runnable object, is more general, because the Runnable object can subclass a class other than Thread. The second idiom is easier to use in simple applications, but is limited by the fact that your task class must be a descendant of Thread. This lesson focuses on the first approach, which separates the Runnable task from the Thread object that executes the task. Not only is this approach more flexible, but it is applicable to the high-level thread management APIs covered later.  </p>
+<p>The Thread class defines a number of methods useful for thread management. These include static methods, which provide information about, or affect the status of, the thread invoking the method. The other methods are invoked from other threads involved in managing the thread and Thread object. We’ll examine some of these methods in the following sections.</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/10/14/Processes-Threads/" itemprop="url">
+                  Processes & Threads
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-14T21:39:20+08:00" content="2016-10-14">
+              2016-10-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/Concurrency/" itemprop="url" rel="index">
+                    <span itemprop="name">Concurrency</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Process"><a href="#Process" class="headerlink" title="Process ?"></a>Process ?</h2><blockquote>
+<p>A process has a self-contained execution environment.A process generally has a complete, private set of basic run-time resources;in particular, each process has its own memory space.</p>
+<p>一个进程，拥有一个独用的的执行环境。一个进程通常有一组完整的，私有的，基本的运行时资源。<br>特别的，每个进程拥有自己的内存空间</p>
+</blockquote>
+<p>进程通常被看做一个程序或应用的代名词。其实，用户看到的单个应用，事实上可能是一组协作的进程。</p>
+<p>为了促进进程间的通信，大多数操作系统支持 Inter Process Communication (IPC) resources,<br>例如 pipes, sockets</p>
+<p>IPC 不仅用来在同一个系统上的进程间的通信，也可以用在不同系统上进程间通信</p>
+<h2 id="Thread"><a href="#Thread" class="headerlink" title="Thread ?"></a>Thread ?</h2><blockquote>
+<p>Threads are sometimes called lightweight processes.Both processes and threads provide an execution environment, but creating a new thread requires fewer resources than creating a new process.</p>
+<p>线程，有时候称之为“轻量级进程”。线程和进程都提供单独的执行环境，但新建一个线程所需的资源要少于<br>新建一个进程所需的资源。</p>
+</blockquote>
+<p>Threads exist within a process — every process has at least one.<br>线程一定包含在进程中。每个进程至少有一个线程。</p>
+<p>Threads share the process’s resources, including memory and open files. This makes for efficient, but potentially problematic, communication.<br>线程可以共享进程的资源，包括内存和打开的文件。这么做是可以更高效，但会存在一些问题</p>
+<p>But from the application programmer’s point of view, you start with just one thread, called the main thread. This thread has the ability to create additional threads</p>
+<h2 id="Different-amp-Contact"><a href="#Different-amp-Contact" class="headerlink" title="Different &amp; Contact ?"></a>Different &amp; Contact ?</h2><ul>
+<li>线程一定包含在进程中。每个进程至少有一个线程。</li>
+<li>进程通常有一组完整的，私有的，基本的运行时资源。<br>线程可以共享进程的资源。</li>
+</ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/procthread.html" target="_blank" rel="noopener">Processes &amp; Threads</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/07/29/Git——工作区与暂存区/" itemprop="url">
                   Git——工作区与暂存区
                 </a>
@@ -580,7 +866,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-count">15</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

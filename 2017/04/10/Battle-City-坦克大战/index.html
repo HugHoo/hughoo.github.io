@@ -1,0 +1,661 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Monda:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="有趣的作品,Battle&City," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="简介大一下学期用 C 语言写的。院里要求两周内用 C 写个小作业，其实主要考察的就是 C 语言基础、文件的读写以及链表等数据结构。其他人写的都是“图书管理系统”、“学员管理系统”之类的。我脑子一抽，决定写个“坦克大战”。 构思花了2天，编写花了一周多一个上午。因为老师们临时改变了检查时间，检查当天上午刚写完“地图编辑器”，下午就拿着电脑找老师检查去了。和老师兴奋地攀谈之后，老师露出神秘的微笑，看着">
+<meta name="keywords" content="有趣的作品,Battle&amp;City">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Battle &amp; City 坦克大战">
+<meta property="og:url" content="ooho.me/2017/04/10/Battle-City-坦克大战/index.html">
+<meta property="og:site_name" content="Ooho&#39;s blog">
+<meta property="og:description" content="简介大一下学期用 C 语言写的。院里要求两周内用 C 写个小作业，其实主要考察的就是 C 语言基础、文件的读写以及链表等数据结构。其他人写的都是“图书管理系统”、“学员管理系统”之类的。我脑子一抽，决定写个“坦克大战”。 构思花了2天，编写花了一周多一个上午。因为老师们临时改变了检查时间，检查当天上午刚写完“地图编辑器”，下午就拿着电脑找老师检查去了。和老师兴奋地攀谈之后，老师露出神秘的微笑，看着">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://raw.githubusercontent.com/HugHoo/Miscellaneous/master/Images/BattleAndCity/bnc01.gif">
+<meta property="og:image" content="https://raw.githubusercontent.com/HugHoo/Miscellaneous/master/Images/BattleAndCity/bnc02.gif">
+<meta property="og:updated_time" content="2018-04-14T07:03:47.253Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Battle &amp; City 坦克大战">
+<meta name="twitter:description" content="简介大一下学期用 C 语言写的。院里要求两周内用 C 写个小作业，其实主要考察的就是 C 语言基础、文件的读写以及链表等数据结构。其他人写的都是“图书管理系统”、“学员管理系统”之类的。我脑子一抽，决定写个“坦克大战”。 构思花了2天，编写花了一周多一个上午。因为老师们临时改变了检查时间，检查当天上午刚写完“地图编辑器”，下午就拿着电脑找老师检查去了。和老师兴奋地攀谈之后，老师露出神秘的微笑，看着">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/HugHoo/Miscellaneous/master/Images/BattleAndCity/bnc01.gif">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="ooho.me/2017/04/10/Battle-City-坦克大战/"/>
+
+  <title> Battle & City 坦克大战 | Ooho's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Ooho's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Procrastination cancer integrated</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-terminal"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-folder-open-o"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-clone"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-square-o"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Battle & City 坦克大战
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-10T16:20:57+08:00" content="2017-04-10">
+              2017-04-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/有趣的作品/" itemprop="url" rel="index">
+                    <span itemprop="name">有趣的作品</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/有趣的作品/Battle-City/" itemprop="url" rel="index">
+                    <span itemprop="name">Battle&City</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>大一下学期用 C 语言写的。院里要求两周内用 C 写个小作业，其实主要考察的就是 C 语言基础、文件的读写以及链表等数据结构。其他人写的都是“图书管理系统”、“学员管理系统”之类的。我脑子一抽，决定写个“坦克大战”。</p>
+<p>构思花了2天，编写花了一周多一个上午。因为老师们临时改变了检查时间，检查当天上午刚写完“地图编辑器”，下午就拿着电脑找老师检查去了。和老师兴奋地攀谈之后，老师露出神秘的微笑，看着我说，做的不错，但这不是我们想要的，于是给了个 <code>A-</code>，哈哈。</p>
+<p>这个小作业算是比较烧脑细胞的，我自己蛮喜欢的。因为时间仓促，很多想法没有实现（比如坦克子弹的多种类型，砖块的多种类型，颜色等）。</p>
+<p>调用了点 <code>Windows API</code>，用来控制光标坐标，用来打印一些特殊字符。没有使用第三方图形库，所有图形都是靠光标移动坐标打印特殊字符拼接而成的。</p>
+<p>其实用 C++ 写起来更方便，但老师不允许使用 C++（怕你直接用STL）。写不了类，写不了 <code>template</code>，硬是用 C 针对坦克列表、子弹列表等分别写了链表作为容器，怪麻烦的。</p>
+<h3 id="开始游戏"><a href="#开始游戏" class="headerlink" title="开始游戏"></a>开始游戏</h3><p><img src="https://raw.githubusercontent.com/HugHoo/Miscellaneous/master/Images/BattleAndCity/bnc01.gif" alt="bnc01"></p>
+<h3 id="地图编辑器"><a href="#地图编辑器" class="headerlink" title="地图编辑器"></a>地图编辑器</h3><p>地图编辑器，可以自己构造地图并存储在本地。</p>
+<p><img src="https://raw.githubusercontent.com/HugHoo/Miscellaneous/master/Images/BattleAndCity/bnc02.gif" alt="bnc02"></p>
+<a id="more"></a>
+<h2 id="隐藏光标"><a href="#隐藏光标" class="headerlink" title="隐藏光标"></a>隐藏光标</h2><p>上面gif演示里，光标没有隐藏。觉得难受的话，可以在主函数内添加如下代码，把光标隐藏掉。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// HANDLE hSqureConsole = GetStdHandle(STD_OUTPUT_HANDLE);</span></span><br><span class="line">CONSOLE_CURSOR_INFO CursorInfo;</span><br><span class="line"></span><br><span class="line">GetConsoleCursorInfo(hSqureConsole, &amp;CursorInfo);</span><br><span class="line">CursorInfo.bVisible = <span class="literal">false</span>;</span><br><span class="line">SetConsoleCursorInfo(hSqureConsole, &amp;CursorInfo);</span><br></pre></td></tr></table></figure>
+<h2 id="源码-amp-运行"><a href="#源码-amp-运行" class="headerlink" title="源码 &amp; 运行"></a>源码 &amp; 运行</h2><p>GitHub: <a href="https://github.com/HugHoo/BattleAndCity" target="_blank" rel="noopener">https://github.com/HugHoo/BattleAndCity</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/HugHoo/BattleAndCity.git</span><br><span class="line"></span><br><span class="line">cd BattleAndCity/Debug</span><br><span class="line"></span><br><span class="line">tank1.0.exe</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/有趣的作品/" rel="tag">#有趣的作品</a>
+          
+            <a href="/tags/Battle-City/" rel="tag">#Battle&City</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/10/Tetris-俄罗斯方块/" rel="next" title="Tetris 俄罗斯方块">
+                <i class="fa fa-chevron-left"></i> Tetris 俄罗斯方块
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/10/Chat-App-with-Node-js-Express-AngularJS-Socket-io/" rel="prev" title="Chat App with Node.js, Express, AngularJS & Socket.io">
+                Chat App with Node.js, Express, AngularJS & Socket.io <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Ooho" />
+          <p class="site-author-name" itemprop="name">Ooho</p>
+          <p class="site-description motion-element" itemprop="description">拖延癌晚期，没得救了</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/HugHoo" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/hugo_hoo_/activities" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:hughoo@outlook.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#开始游戏"><span class="nav-number">1.1.</span> <span class="nav-text">开始游戏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#地图编辑器"><span class="nav-number">1.2.</span> <span class="nav-text">地图编辑器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#隐藏光标"><span class="nav-number">2.</span> <span class="nav-text">隐藏光标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码-amp-运行"><span class="nav-number">3.</span> <span class="nav-text">源码 &amp; 运行</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ooho</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
